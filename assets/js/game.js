@@ -77,17 +77,36 @@ MiloCat.Game.prototype = {
 
         tick++;
 
+        // FOR DEBUG
+        /*
         if (tick > 600) {
-            var rand = Math.floor((Math.random() * 100) + 1)
-            if (rand < 50 && cat.stats.hungry > 25) {
-                this.moveCatRandomly();
+            var rand = Math.floor((Math.random() * 100) + 1);
+            if (rand < 50  && cat.action != 'drink') {
+                this.moveCatToBowl('water');
             } else {
-                if (cat.action != 'eat') {
-                    this.moveCatToFood();
+                this.moveCatRandomly();
+            }
+            tick = 0;
+        }
+        */
+        // FOR DEBUG
+
+        if (tick > 600) {
+            var rand = Math.floor((Math.random() * 100) + 1);
+            if (cat.stats.hungry <= 25) {
+                this.moveCatToBowl('food');
+            } else {
+                if (rand < 34  && cat.action != 'eat') {
+                    this.moveCatToBowl('food');
+                } else if (rand < 67  && cat.action != 'drink') {
+                    this.moveCatToBowl('water');
+                } else {
+                    this.moveCatRandomly();
                 }
             }
             tick = 0;
         }
+
     },
 
     generateBowl: function(type) {
@@ -161,14 +180,18 @@ MiloCat.Game.prototype = {
         this.moveCatTo(moveX, moveY);
     },
 
-    moveCatToFood: function() {
+    moveCatToBowl: function(type) {
 
-        var bowl = bowls.list['food'];
+        var bowl = bowls.list[type];
 
         var moveX = bowl.x + Math.abs(cat.width)/2,
             moveY = bowl.y - Math.abs(cat.height)/2 + 10;
 
-        this.moveCatTo(moveX, moveY, this.catEat);
+        if (type == 'food') {
+            this.moveCatTo(moveX, moveY, this.catEat);
+        } else {
+            this.moveCatTo(moveX, moveY, this.catDrink);
+        }
     },
 
     moveCatTo: function(moveX, moveY, callback) {
@@ -208,6 +231,15 @@ MiloCat.Game.prototype = {
         cat.action = 'eat';
         cat.stats.hungry = cat.stats.hungry + 50 > 100 ? 100 : cat.stats.hungry + 50;
         cat.stats.healthy = cat.stats.healthy + 5 > 100 ? 100 : cat.stats.healthy + 5;
+        cat.stats.happy = cat.stats.happy + 1 > 100 ? 100 : cat.stats.happy + 1;
+    },
+
+    catDrink: function() {
+        cat.scale.x = Math.abs(cat.scale.x);
+        cat.animations.play('eat');
+        cat.action = 'drink';
+        cat.stats.hungry = cat.stats.hungry + 5 > 100 ? 100 : cat.stats.hungry + 5;
+        cat.stats.healthy = cat.stats.healthy + 20 > 100 ? 100 : cat.stats.healthy + 20;
         cat.stats.happy = cat.stats.happy + 1 > 100 ? 100 : cat.stats.happy + 1;
     },
 
