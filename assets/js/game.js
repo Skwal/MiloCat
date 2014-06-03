@@ -20,6 +20,8 @@ MiloCat.Game = function(game) {
 
     cat = null,
 
+    litter = null,
+
     tick = 0;
 
 };
@@ -51,6 +53,9 @@ MiloCat.Game.prototype = {
             healthy: 50,
             hungry: 50
         };
+
+        // Litter
+        litter = this.add.sprite(650, 410, 'litter');
 
         // stat bars
         this.generateStatBar('happy', cat.stats.happy);
