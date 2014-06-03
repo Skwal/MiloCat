@@ -2,8 +2,12 @@
 <html>
 <head>
     <title>MiloCat</title>
-    <script type="text/javascript" src="assets/js/phaser.min.js"></script>
-    <script type="text/javascript" src="assets/js/game.js"></script>
+    <script src="assets/js/storage.js"></script>
+    <script src="assets/js/phaser.min.js"></script>
+    <script src="assets/js/boot.js"></script>
+    <script src="assets/js/loader.js"></script>
+    <script src="assets/js/menu.js"></script>
+    <script src="assets/js/game.js"></script>
     <style type="text/css">
     canvas {
         margin: 20px auto 0;
@@ -15,6 +19,17 @@
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
 </head>
 <body>
+
+<script>
+(function(){
+    var game = new Phaser.Game(800, 600, Phaser.CANVAS, '');
+    game.state.add('Boot', MiloCat.Boot);
+    game.state.add('Loader', MiloCat.Loader);
+    game.state.add('Menu', MiloCat.Menu);
+    game.state.add('Game', MiloCat.Game);
+    game.state.start('Boot');
+})();
+</script>
 
 </body>
 </html>
