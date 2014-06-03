@@ -2,6 +2,7 @@
 MiloCat.Game = function(game) {
 
     background = null,
+    windows = null,
 
     bowls = {
         offsetX: 50,
@@ -32,6 +33,7 @@ MiloCat.Game.prototype = {
 
         // Room background
         background = this.add.sprite(0, 0, 'roombg');
+        windows = this.add.sprite(this.world.centerX-85, 190, 'windows');
 
         // // Bowl of food/water
         this.generateBowl('food');

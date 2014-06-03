@@ -6,6 +6,7 @@ MiloCat.Loader.prototype = {
 
     preload: function() {
         this.load.image('roombg', 'assets/img/bg.png');
+        this.load.image('windows', 'assets/img/window.png');
         this.load.spritesheet('cat2','assets/img/catsprite.png', 84, 68, 18);
         this.load.spritesheet('cat','assets/img/catsprite2.png', 84, 68, 18);
         this.load.spritesheet('litter','assets/img/litterbox.png', 106, 48, 1);
