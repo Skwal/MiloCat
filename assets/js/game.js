@@ -38,7 +38,8 @@ MiloCat.Game.prototype = {
         this.generateBowl('water');
 
         // Cat sprite
-        cat = this.add.sprite(this.world.centerX, 400, 'cat');
+        cat = storageAPI.get('catSprite') || 'cat';
+        cat = this.add.sprite(this.world.centerX, 400, cat);
         cat.anchor.setTo(.5, .5);
         cat.animations.add('still', [0,1,2,3], .3, true);
         cat.animations.add('eat', [4,5], 1, true);
