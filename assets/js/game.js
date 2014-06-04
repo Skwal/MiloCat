@@ -2,7 +2,11 @@
 MiloCat.Game = function(game) {
 
     background = null,
+    wall = null,
+    wallLayer = null,
     windows = null,
+
+    hud = null,
 
     bowls = {
         offsetX: 50,
@@ -12,14 +16,15 @@ MiloCat.Game = function(game) {
     },
 
     statBars = {
-        offsetX: 90,
+        offsetX: 96,
         offsetY: 20,
         width: 100,
-        height: 12,
+        height: 10,
         list: {}
     },
 
     cat = null,
+    catFace = null,
 
     litter = null,
 
@@ -33,7 +38,16 @@ MiloCat.Game.prototype = {
 
         // Room background
         background = this.add.sprite(0, 0, 'roombg');
-        windows = this.add.sprite(this.world.centerX-85, 190, 'windows');
+
+        wall = this.add.tileSprite(0, 0, this.stage.bounds.width, 380, 'wall');
+
+        windows = this.add.sprite(this.world.centerX-this.cache.getImage('windows').width/2, 176, 'windows');
+
+        hud = this.add.sprite(10, statBars.offsetY-15, 'hud');
+        catFace = this.add.sprite(200, 200, 'cat');
+        catFace.animations.add('face', [19], 1, true);
+        catFace.animations.play('face');
+        catFace.anchor.setTo(.5, .5);
 
         // // Bowl of food/water
         this.generateBowl('food');
@@ -47,6 +61,7 @@ MiloCat.Game.prototype = {
         cat.animations.add('eat', [4,5], 1, true);
         cat.animations.add('walk', [6,7,8,9,10,11], 6, true);
         cat.animations.add('run', [12,13,14,15,16,17], 10, true);
+        cat.animations.add('sit', [18], 1, false);
         // cat.scale.setTo(.7, .7)
         this.catStill();
 
@@ -145,12 +160,12 @@ MiloCat.Game.prototype = {
 
         statBars.list[name] = {};
 
-        statBars.list[name].txt = this.add.text(20, statBars.offsetY, name.toUpperCase(), style);
+        //statBars.list[name].txt = this.add.text(20, statBars.offsetY, name.toUpperCase(), style);
 
-        statBars.list[name].bar = this.add.graphics(0, 0);
-        statBars.list[name].bar.lineStyle(2, 0x333333, 1);
-        statBars.list[name].bar.beginFill(0xFFFFFF, 1);
-        statBars.list[name].bar.drawRect(statBars.offsetX, statBars.offsetY, statBars.width+2, statBars.height);
+        // statBars.list[name].bar = this.add.graphics(0, 0);
+        // statBars.list[name].bar.lineStyle(2, 0x333333, 1);
+        // statBars.list[name].bar.beginFill(0xFFFFFF, 1);
+        // statBars.list[name].bar.drawRect(statBars.offsetX, statBars.offsetY, statBars.width+2, statBars.height);
 
         statBars.list[name].level = this.add.graphics(0, 0);
         statBars.list[name].level.posY = statBars.offsetY;
